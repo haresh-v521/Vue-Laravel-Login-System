@@ -10,29 +10,25 @@
             <div class="login-form">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="name" type="text" class="validate" v-model="name">
-                        <label for="name">Name</label>
+                        <input id="name" type="text" placeholder="Name" class="validate" v-model="name"> 
                         <span class="text text-danger" v-if="error && errors.name">{{ errors.name[0] }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="text" class="validate" v-model="email">
-                        <label for="email">Email</label>
+                        <input id="email" type="text"  placeholder="Email" class="validate" v-model="email">
                         <span class="text text-danger" v-if="error && errors.email">{{ errors.email[0] }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate" v-model="password">
-                        <label for="password">Password</label>
+                        <input id="password" type="password"  placeholder="Password" class="validate" v-model="password">
                         <span class="text text-danger" v-if="error && errors.password">{{ errors.password[0] }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="confirm_password" type="password" class="validate" v-model="confirmPassword">
-                        <label for="confirm_password">Confirm Password</label>
+                        <input id="confirm_password" type="password"  placeholder="Confirm Password" class="validate" v-model="confirmPassword">
                         <span class="text text-danger" v-if="error && errors.confirmPassword">{{ errors.confirmPassword[0] }}</span>
                     </div>
                 </div>
@@ -43,6 +39,8 @@
 </template>
  
 <script>
+import {environment_api } from '../env';
+
 export default {
    data(){
      return {
@@ -58,11 +56,11 @@ export default {
    },
    methods: {
      register(){
-        this.axios.post('api/auth/register', {
+        this.axios.post(environment_api.api_url+'register', {
           name: this.name,
           email: this.email,
           password: this.password,
-          confirmPassword: this.confirmPassword
+          password_confirmation: this.confirmPassword
      }).then(response => {
         this.isProgress = true;
         if(response.data.success == true)
@@ -70,7 +68,7 @@ export default {
           setTimeout(() => {
             this.isProgress = false;
             this.$router.push({ name: 'login'})
-            this.$toaster.success('Sign up successfully...')
+            this.$toaster.success('Register successfully...')
         }, 2000)
       }
     }).catch(error => {

@@ -30,9 +30,16 @@
 </template>
 
 <script>
-
+import store from './store'
 export default {
   name: 'App',
+  methods: {
+    logout() {
+          store.commit('LogoutUser');
+          this.$router.push({ name: 'login'})
+          this.$toaster.success('Logout successfully...')
+    }
+  }
 }
 </script>
 

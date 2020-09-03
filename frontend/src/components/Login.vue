@@ -13,15 +13,13 @@
             <div class="login-form">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="text" class="validate" v-model="email">
-                        <label for="email">Email</label>
+                        <input id="email" placeholder="Email" type="text" class="validate" v-model="email">
                         <span class="text text-danger" v-if="loginError && errors.email">{{ errors.email[0] }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate" v-model="password">
-                        <label for="password">Password</label>
+                        <input id="password" placeholder="Password" type="password" class="validate" v-model="password">
                         <span class="text text-danger" v-if="loginError && errors.password">{{ errors.password[0] }}</span>
                     </div>
                 </div>
@@ -32,6 +30,8 @@
 </template>
 <script>
 import store from '../store'
+import {environment_api } from '../env';
+
     export default {
        data() {
          return {
@@ -45,7 +45,7 @@ import store from '../store'
     methods: {
       login() {
         this.loginError = false;
-        this.axios.post('api/auth/login', {
+        this.axios.post(environment_api.api_url+'login', {
         email: this.email,
         password: this.password
       }).then(response => {
